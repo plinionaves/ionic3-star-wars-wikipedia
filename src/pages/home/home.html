@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Star Wars
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <img class="logo" src="assets/images/star-wars.png">
+
+  <p text-center>Welcome to Star Wars Wikipedia!</p>
+  <p text-center>Please, select an item:</p>
+
+  <div *ngIf="resources$ | async | keys as resources">
+    <ion-list>
+      <button ion-item *ngFor="let r of resources" (click)="onResource(r.key, r.value)">{{ r.key | capitalize:true }}</button>
+    </ion-list>
+  </div>
+
+</ion-content>

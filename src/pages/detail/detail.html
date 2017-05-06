@@ -1,0 +1,59 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ item?.name || item?.title }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list *ngIf="item | clean | keys as itemKeysValues" no-lines>
+    <ion-grid>
+      <ion-item *ngFor="let singleItem of itemKeysValues">
+
+        <ion-row *ngIf="singleItem.key != 'films' && 
+                        singleItem.key != 'species' && 
+                        singleItem.key != 'starships' && 
+                        singleItem.key != 'vehicles' && 
+                        singleItem.key != 'characters' && 
+                        singleItem.key != 'planets' &&
+                        singleItem.key != 'pilots' &&
+                        singleItem.key != 'people' &&
+                        singleItem.key != 'residents'; else itemLists">
+          <ion-col col-5 text-wrap>{{ singleItem.key | capitalize:true:true }}</ion-col>
+
+          <div *ngIf="singleItem.value; else emptyValue">
+            <ion-col col-7 text-wrap *ngIf="singleItem.key != 'homeworld'; else homeworld">{{ singleItem.value }}</ion-col>
+            <ng-template #homeworld>
+              <ion-col col-7 text-wrap>
+                <button ion-button color="star-wars" outline small (click)="viewResource(singleItem.value)">View planet</button>
+              </ion-col>
+            </ng-template>
+          </div>
+          <ng-template #emptyValue>
+            <ion-col col-7 text-wrap>N/a</ion-col>
+          </ng-template>
+        </ion-row>
+
+        <ng-template #itemLists>
+          <ion-row>
+            <ion-col>{{ singleItem.key | capitalize:true:true }}</ion-col>
+          </ion-row>
+          <ion-row *ngIf="singleItem.value.length > 0; else emptyItemList">
+            <ion-col col-2 *ngFor="let itemList of singleItem.value; let i = index">
+              <button ion-button color="star-wars" outline small (click)="viewResource(itemList)">{{ (i + 1) }}</button>
+            </ion-col>
+          </ion-row>
+
+          <ng-template #emptyItemList>
+            <ion-col ion-text color="star-wars">None</ion-col>
+          </ng-template>
+        </ng-template>
+
+      </ion-item>
+    </ion-grid>
+  </ion-list>
+
+</ion-content>

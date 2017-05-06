@@ -1,0 +1,16 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ resourceName | capitalize:true }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list *ngIf="pageItem$ | async as pageItem">
+    <button ion-item *ngFor="let item of pageItem.results" (click)="onDetail(item)">{{ item?.name || item?.title }}</button>
+  </ion-list>
+
+</ion-content>
